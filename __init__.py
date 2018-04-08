@@ -58,7 +58,7 @@ class ItsmUserSkill(MycroftSkill):
         # Decode the JSON response into a dictionary and use the data
         data = response.json()
         name = data['result']['name']
-        self.speak_dialog("Your name in your ServiceNow Instance is {}.".format(name))
+        self.speak("Your name in your ServiceNow Instance is {}.".format(name))
         
 
     def stop(self):
