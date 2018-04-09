@@ -14,11 +14,15 @@
 #
 # You should have received a copy of the GNU General Public License
 # along with Mycroft Core.  If not, see <http://www.gnu.org/licenses/>.
+from os.path import dirname
 
 from adapt.intent import IntentBuilder
 
 from mycroft.skills.core import MycroftSkill
 from mycroft.util.log import getLogger
+
+
+import requests
 
 __author__ = 'Rahul Kumar Shandilya'
 
@@ -30,6 +34,9 @@ class ItsmUserSkill(MycroftSkill):
         super(ItsmUserSkill, self).__init__(name="ItsmUserSkill")
 
     def initialize(self):
+        self.load_data_files(dirname(__file__))
+        
+        
         itsm_user_intent = IntentBuilder("itsmuserintent"). \
             require("ItsmUserKeyword").build()
         self.register_intent(itsm_user_intent, self.handle_itsm_user_intent)
@@ -58,7 +65,7 @@ class ItsmUserSkill(MycroftSkill):
         # Decode the JSON response into a dictionary and use the data
         data = response.json()
         name = data['result']['name']
-        self.speak("Your name in your ServiceNow Instance is {}.".format(name))
+        self.speak("Your name in your ServiceNow Instance is {}".format(name))
         
 
     def stop(self):
