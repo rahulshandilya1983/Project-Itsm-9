@@ -52,9 +52,9 @@ class ItsmUserSkill(MycroftSkill):
         #                     self.handle_hello_world_intent)
 
     def handle_itsm_user_intent(self, message):
-        url = 'https://dev22921.service-now.com/api/now/table/sys_user/66e1f49edb5d13006b72712ebf9619c2?sysparm_display_value=true&sysparm_exclude_reference_link=true&sysparm_fields=name'
+        url = 'https://dev22921.service-now.com//api/43683/sla/sla_details'
         user = '531834'
-        pwd = 'Anita!2345'
+        pwd = 'Welcome!2345'
         headers = {"Content-Type":"application/json","Accept":"application/json"}
         # Do the HTTP request
         response = requests.get(url, auth=(user, pwd), headers=headers )
@@ -64,8 +64,14 @@ class ItsmUserSkill(MycroftSkill):
             exit()
         # Decode the JSON response into a dictionary and use the data
         data = response.json()
-        name = data['result']['name']
-        self.speak("Your name in your ServiceNow Instance is {}".format(name))
+        r = data['result']
+        length = len(data['result'])
+        detail = ""
+        x = 0
+        for x in range(0, length):
+            detail += "Incident {} is having SLA less than 30 minutes ".format(r[x]['incident'])
+            x += 1
+        self.speak(detail)
         
 
     def stop(self):
